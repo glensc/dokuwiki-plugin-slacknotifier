@@ -2,7 +2,7 @@
 
 A DokuWiki plugin that notifies a Slack channel room of wiki edits.
 
-![Example notification](https://github.com/mallchin/dokuwiki-slack-notifier/raw/master/example.png)
+![Example notification](example.png)
 
 ## Install
 
