@@ -6,7 +6,12 @@ A DokuWiki plugin that notifies a Slack channel room of wiki edits.
 
 ## Install
 
-Download the latest [Release](https://github.com/mallchin/dokuwiki-slack-notifier/releases) and install the plugin using the [Plugin Manager](https://www.dokuwiki.org/plugin:plugin).  Refer to [Plugins](https://www.dokuwiki.org/plugins) on how to install plugins manually.
+Download the latest release from [Tags] page and install the plugin using the
+[Plugin Manager]. Refer to [Plugins] on how to install plugins manually.
+
+[Tags]: https://github.com/glensc/dokuwiki-plugin-slacknotifier/tags
+[Plugin Manager]: https://www.dokuwiki.org/plugin:plugin
+[Plugins]: https://www.dokuwiki.org/plugins
 
 ## Configure
 
