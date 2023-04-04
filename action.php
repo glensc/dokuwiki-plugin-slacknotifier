@@ -24,7 +24,7 @@ class action_plugin_slacknotifier extends DokuWiki_Action_Plugin {
                 $controller->register_hook('IO_WIKIPAGE_WRITE', 'AFTER', $this, '_handle');
         }
 
-        function _handle(Doku_Event $event, $param) {
+        function _handle(Doku_Event $event) {
 
                 // filter writes to attic
                 if ($this->_attic_write($event)) return;
@@ -64,7 +64,6 @@ class action_plugin_slacknotifier extends DokuWiki_Action_Plugin {
         }
 
         private function _set_event($event) {
-                global $ID;
                 global $INFO;
                 $data = $event->data;
                 $contents = $data[0][1];
@@ -85,7 +84,6 @@ class action_plugin_slacknotifier extends DokuWiki_Action_Plugin {
         }
 
         private function _set_payload_text() {
-                global $ID;
                 global $INFO;
                 switch ($this->_event) {
                         case 'create':
