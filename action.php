@@ -190,7 +190,7 @@ class action_plugin_slacknotifier extends DokuWiki_Action_Plugin {
 
                         // include username and password if defined
                         if (!empty($proxy['user']) && !empty($proxy['pass'])) {
-                                $proxyAuth = $proxy['user'] . ':' . conf_decodeString($proxy['port']);
+                                $proxyAuth = $proxy['user'] . ':' . conf_decodeString($proxy['pass']);
                                 curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxyAuth);
                         }
 
