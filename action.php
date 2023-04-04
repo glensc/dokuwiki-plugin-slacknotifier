@@ -7,6 +7,9 @@
  */
 
 
+use dokuwiki\HTTP\DokuHTTPClient;
+use dokuwiki\Logger;
+
 if (!defined('DOKU_INC')) die();
 
 //require_once (DOKU_INC.'inc/changelog.php');
@@ -167,42 +170,16 @@ class action_plugin_slacknotifier extends DokuWiki_Action_Plugin {
         }
 
         private function _submit_payload() {
-                global $conf;
+            $http = new DokuHTTPClient();
+            $http->headers['Content-Type'] = 'application/json';
+            // we do single ops here, no need for keep-alive
+            $http->keep_alive = false;
 
-                // encode payload
-                $json = json_encode($this->_payload);
-
-                // init curl
-                $webhook = $this->getConf('webhook');
-                $ch = curl_init($webhook);
-
-                // use proxy if defined
-                $proxy = $conf['proxy'];
-                if (!empty($proxy['host'])) {
-
-                        // configure proxy address and port
-                        $proxyAddress = $proxy['host'] . ':' . $proxy['port'];
-                        curl_setopt($ch, CURLOPT_PROXY, $proxyAddress);
-                        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-                        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-
-                        // include username and password if defined
-                        if (!empty($proxy['user']) && !empty($proxy['pass'])) {
-                                $proxyAuth = $proxy['user'] . ':' . conf_decodeString($proxy['pass']);
-                                curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxyAuth);
-                        }
-
-                }
-
-                // submit payload
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-                curl_setopt($ch, CURLOPT_POSTFIELDS, array('payload' => $json));
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                $result = curl_exec($ch);
-
-                // close curl
-                Curl_close($ch);
-
+            $url = $this->getConf('webhook');
+            $result = $http->post($url, array('payload' => json_encode($this->_payload)));
+            if ($result !== 'ok') {
+                Logger::error("Error posting to Slack", $http->error, __FILE__, __LINE__);
+            }
         }
 
 }
