@@ -10,6 +10,7 @@ use InvalidArgumentException;
  * @property string $id
  * @property int|false $oldRevision
  * @property int $newRevision
+ * @link https://www.dokuwiki.org/devel:event:common_wikipage_save
  */
 class Payload
 {
