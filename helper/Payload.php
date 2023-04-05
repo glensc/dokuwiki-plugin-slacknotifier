@@ -13,12 +13,12 @@ use InvalidArgumentException;
  */
 class Payload
 {
-    private const EVENT_TYPE = array(
+    private const EVENT_TYPE = [
         'E' => 'edit',
         'e' => 'edit minor',
         'C' => 'create',
         'D' => 'delete',
-    );
+    ];
 
     /** @var string|null */
     public $eventType;

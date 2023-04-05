@@ -69,7 +69,7 @@ class action_plugin_slacknotifier extends DokuWiki_Action_Plugin
         $http->keep_alive = false;
 
         $url = $this->getConf('webhook');
-        $result = $http->post($url, array('payload' => json_encode($payload)));
+        $result = $http->post($url, ['payload' => json_encode($payload)]);
         if ($result !== 'ok') {
             $ctx = [
                 'resp_body' => $http->resp_body,
