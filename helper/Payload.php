@@ -14,10 +14,10 @@ use InvalidArgumentException;
 class Payload
 {
     private const EVENT_TYPE = [
-        'E' => 'edit',
-        'e' => 'edit minor',
-        'C' => 'create',
-        'D' => 'delete',
+        DOKU_CHANGE_TYPE_EDIT => 'edit',
+        DOKU_CHANGE_TYPE_MINOR_EDIT => 'edit minor',
+        DOKU_CHANGE_TYPE_CREATE => 'create',
+        DOKU_CHANGE_TYPE_DELETE => 'delete',
     ];
 
     /** @var string|null */
