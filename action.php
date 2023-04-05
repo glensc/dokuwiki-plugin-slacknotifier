@@ -45,7 +45,7 @@ class action_plugin_slacknotifier extends DokuWiki_Action_Plugin {
                 $this->_set_payload_attachments();
 
                 // submit payload
-                $this->_submit_payload();
+                $this->submitPayload($this->_payload);
 
         }
 
@@ -169,14 +169,14 @@ class action_plugin_slacknotifier extends DokuWiki_Action_Plugin {
                 return $url;
         }
 
-        private function _submit_payload() {
+        private function submitPayload(array $payload) {
             $http = new DokuHTTPClient();
             $http->headers['Content-Type'] = 'application/json';
             // we do single ops here, no need for keep-alive
             $http->keep_alive = false;
 
             $url = $this->getConf('webhook');
-            $result = $http->post($url, array('payload' => json_encode($this->_payload)));
+            $result = $http->post($url, array('payload' => json_encode($payload)));
             if ($result !== 'ok') {
                 Logger::error("Error posting to Slack", $http->error, __FILE__, __LINE__);
             }
