@@ -55,6 +55,8 @@ class Payload
             return true;
         } elseif ($eventType === 'edit' && $config->notify_edit) {
             return true;
+        } elseif ($eventType === 'edit minor' && $config->notify_edit && $config->notify_edit_minor) {
+            return true;
         } elseif ($eventType === 'delete' && $config->notify_delete) {
             return true;
         }
