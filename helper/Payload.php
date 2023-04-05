@@ -48,7 +48,7 @@ class Payload
         return $this->data[$name];
     }
 
-    private static function isValidEvent(string $eventType, Config $config): bool
+    private static function isValidEvent(?string $eventType, Config $config): bool
     {
         if ($eventType === 'create' && $config->notify_create) {
             return true;
