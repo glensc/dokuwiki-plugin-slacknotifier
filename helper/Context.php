@@ -2,6 +2,8 @@
 
 namespace dokuwiki\plugin\slacknotifier\helper;
 
+use InvalidArgumentException;
+
 /**
  * Context of the edit.
  *
@@ -15,7 +17,7 @@ class Context
     {
         $method = "get$name";
         if (!method_exists($this, $method)) {
-            throw new \InvalidArgumentException("Invalid property: $name");
+            throw new InvalidArgumentException("Invalid property: $name");
         }
 
         return $this->{$method}();
