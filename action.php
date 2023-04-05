@@ -18,7 +18,8 @@ if (!defined('DOKU_LF')) define('DOKU_LF', "\n");
 if (!defined('DOKU_TAB')) define('DOKU_TAB', "\t");
 if (!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
 
-class action_plugin_slacknotifier extends DokuWiki_Action_Plugin {
+class action_plugin_slacknotifier extends DokuWiki_Action_Plugin
+{
 
         var $_event = null;
         var $_payload = null;
@@ -169,17 +170,17 @@ class action_plugin_slacknotifier extends DokuWiki_Action_Plugin {
                 return $url;
         }
 
-        private function submitPayload(array $payload) {
-            $http = new DokuHTTPClient();
-            $http->headers['Content-Type'] = 'application/json';
-            // we do single ops here, no need for keep-alive
-            $http->keep_alive = false;
+    private function submitPayload(array $payload)
+    {
+        $http = new DokuHTTPClient();
+        $http->headers['Content-Type'] = 'application/json';
+        // we do single ops here, no need for keep-alive
+        $http->keep_alive = false;
 
-            $url = $this->getConf('webhook');
-            $result = $http->post($url, array('payload' => json_encode($payload)));
-            if ($result !== 'ok') {
-                Logger::error("Error posting to Slack", $http->error, __FILE__, __LINE__);
-            }
+        $url = $this->getConf('webhook');
+        $result = $http->post($url, array('payload' => json_encode($payload)));
+        if ($result !== 'ok') {
+            Logger::error("Error posting to Slack", $http->error, __FILE__, __LINE__);
         }
-
+    }
 }
