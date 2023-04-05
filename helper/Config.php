@@ -21,7 +21,6 @@ class Config
 
     public function __construct(PluginInterface $plugin)
     {
-
         $this->plugin = $plugin;
     }
 
