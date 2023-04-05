@@ -1,7 +1,7 @@
 base   slacknotifier
 author glen
 email  glen@delfi.ee
-date   2023-04-04
+date   2023-04-06
 name   Slack Notifier
 desc   Notify page events via Slack
 url    https://www.dokuwiki.org/plugin:slacknotifier
