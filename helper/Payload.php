@@ -14,6 +14,7 @@ class Payload
 {
     private const EVENT_TYPE = array(
         'E' => 'edit',
+        'e' => 'edit minor',
         'C' => 'create',
         'D' => 'delete',
     );
@@ -53,6 +54,8 @@ class Payload
         if ($eventType === 'create' && $config->notify_create) {
             return true;
         } elseif ($eventType === 'edit' && $config->notify_edit) {
+            return true;
+        } elseif ($eventType === 'edit minor' && $config->notify_edit && $config->notify_edit_minor) {
             return true;
         } elseif ($eventType === 'delete' && $config->notify_delete) {
             return true;

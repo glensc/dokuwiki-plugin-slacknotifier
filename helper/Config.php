@@ -11,6 +11,7 @@ use dokuwiki\Extension\PluginInterface;
  * @property bool $notify_create
  * @property bool $notify_edit
  * @property bool $notify_delete
+ * @property bool $notify_edit_minor
  * @property bool $show_summary
  */
 class Config
