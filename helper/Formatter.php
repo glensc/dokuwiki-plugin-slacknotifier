@@ -33,13 +33,13 @@ class Formatter
             }
         }
 
-        $formatted = ["text" => $title];
+        $formatted = ['text' => $title];
         if ($payload->summary && $this->config->show_summary) {
             $formatted['attachments'] = [
                 [
-                    "fallback" => "Change summary",
-                    "title" => "Summary",
-                    "text" => "{$payload->summary}\n- {$username}"
+                    'fallback' => 'Change summary',
+                    'title' => 'Summary',
+                    'text' => "{$payload->summary}\n- {$username}",
                 ],
             ];
         }

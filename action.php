@@ -76,7 +76,7 @@ class action_plugin_slacknotifier extends DokuWiki_Action_Plugin
                 'result' => $result,
                 'http_error' => $http->error,
             ];
-            Logger::error("Error posting to Slack", $ctx, __FILE__, __LINE__);
+            Logger::error('Error posting to Slack', $ctx, __FILE__, __LINE__);
         }
     }
 }
