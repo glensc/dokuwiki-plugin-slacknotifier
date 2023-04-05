@@ -180,7 +180,12 @@ class action_plugin_slacknotifier extends DokuWiki_Action_Plugin
         $url = $this->getConf('webhook');
         $result = $http->post($url, array('payload' => json_encode($payload)));
         if ($result !== 'ok') {
-            Logger::error("Error posting to Slack", $http->error, __FILE__, __LINE__);
+            $ctx = [
+                'resp_body' => $http->resp_body,
+                'result' => $result,
+                'http_error' => $http->error,
+            ];
+            Logger::error("Error posting to Slack", $ctx, __FILE__, __LINE__);
         }
     }
 }
