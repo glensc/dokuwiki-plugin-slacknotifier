@@ -8,7 +8,7 @@ use InvalidArgumentException;
 /**
  * @property string|null $summary
  * @property string $id
- * @property int $oldRevision
+ * @property int|false $oldRevision
  * @property int $newRevision
  */
 class Payload
