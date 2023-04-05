@@ -6,17 +6,8 @@
  *
  */
 
-
 use dokuwiki\HTTP\DokuHTTPClient;
 use dokuwiki\Logger;
-
-if (!defined('DOKU_INC')) die();
-
-//require_once (DOKU_INC.'inc/changelog.php');
-
-if (!defined('DOKU_LF')) define('DOKU_LF', "\n");
-if (!defined('DOKU_TAB')) define('DOKU_TAB', "\t");
-if (!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
 
 class action_plugin_slacknotifier extends DokuWiki_Action_Plugin
 {
