@@ -14,6 +14,7 @@ class Payload
 {
     private const EVENT_TYPE = array(
         'E' => 'edit',
+        'e' => 'edit minor',
         'C' => 'create',
         'D' => 'delete',
     );
