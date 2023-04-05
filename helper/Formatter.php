@@ -20,7 +20,7 @@ class Formatter
             'delete' => 'removed',
         ];
         $action = $actionMap[$payload->eventType] ?? null;
-        $username = $context->username;
+        $username = $context->username ?: 'Anonymous';
         $page = $payload->id;
         $link = $this->buildUrl($page);
         $title = "{$username} {$action} page <{$link}|{$page}>";
