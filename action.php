@@ -17,12 +17,12 @@ use dokuwiki\plugin\slacknotifier\helper\Payload;
 
 class action_plugin_slacknotifier extends DokuWiki_Action_Plugin
 {
-    public function register(EventHandler $controller)
+    public function register(EventHandler $controller): void
     {
         $controller->register_hook('COMMON_WIKIPAGE_SAVE', 'AFTER', $this, 'handleSave');
     }
 
-    public function handleSave(Event $event)
+    public function handleSave(Event $event): void
     {
         if ($this->isAtticWrite($event->data['file'])) {
             return;
@@ -62,7 +62,7 @@ class action_plugin_slacknotifier extends DokuWiki_Action_Plugin
         return in_array($thisNamespace[0], $validNamespaces, true);
     }
 
-    private function submitPayload(array $payload)
+    private function submitPayload(array $payload): void
     {
         $http = new DokuHTTPClient();
         $http->headers['Content-Type'] = 'application/json';
