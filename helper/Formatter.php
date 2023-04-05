@@ -23,12 +23,12 @@ class Formatter
         $action = $actionMap[$payload->eventType] ?? null;
         $username = $context->username ?: 'Anonymous';
         $page = $payload->id;
-        $link = $this->buildUrl($page);
+        $link = $this->buildUrl($page, $payload->newRevision);
         $title = "{$username} {$action} page <{$link}|{$page}>";
         if ($payload->eventType !== 'delete') {
             $oldRev = $payload->oldRevision;
             if ($oldRev) {
-                $diffURL = $this->buildUrl($page, $oldRev);
+                $diffURL = $this->buildUrl($page, $payload->newRevision, $payload->oldRevision);
                 $title .= " (<{$diffURL}|Compare changes>)";
             }
         }
@@ -47,9 +47,9 @@ class Formatter
         return $formatted;
     }
 
-    private function buildUrl(string $page, ?int $oldRev = null): ?string
+    private function buildUrl(string $page, int $rev, ?int $oldRev = null): ?string
     {
-        $urlParameters = $oldRev ? "do=diff&rev={$oldRev}" : '';
+        $urlParameters = $oldRev ? "do=diff&rev2[0]=$oldRev&rev2[1]=$rev" : "rev=$rev";
 
         return wl($page, $urlParameters, true, '&');
     }
