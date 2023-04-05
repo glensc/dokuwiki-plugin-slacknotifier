@@ -17,6 +17,7 @@ class Formatter
         $actionMap = [
             'create' => 'created',
             'edit' => 'updated',
+            'edit minor' => 'updated (minor edit)',
             'delete' => 'removed',
         ];
         $action = $actionMap[$payload->eventType] ?? null;
