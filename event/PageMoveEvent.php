@@ -12,5 +12,16 @@ use InvalidArgumentException;
  */
 class PageMoveEvent extends BaseEvent
 {
+    /** @var PageSaveEvent|null */
+    private $createdPageEvent;
 
+    public function setCreatedPageEvent(PageSaveEvent $event)
+    {
+        $this->createdPageEvent = $event;
+    }
+
+    public function getCreatedPageEvent(): ?PageSaveEvent
+    {
+        return $this->createdPageEvent;
+    }
 }
