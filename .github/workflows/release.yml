@@ -12,6 +12,7 @@ on:
 
 env:
   INFOTXT: plugin.info.txt
+  PHP_VERSION: "8.2"
 
 jobs:
   release:
@@ -38,5 +39,10 @@ jobs:
           release_name: Release ${{ env.VERSION }}
           draft: false
           prerelease: false
+
+      - name: Setup PHP ${{ env.PHP_VERSION }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
 
 # vim:ts=2:sw=2:et
