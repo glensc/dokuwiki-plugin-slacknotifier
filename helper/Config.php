@@ -26,6 +26,6 @@ class Config
 
     public function __get($name)
     {
-        return $this->plugin->getConf($name);
+        return $this->plugin->getConf($name, null);
     }
 }
