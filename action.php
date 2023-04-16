@@ -17,12 +17,46 @@ use dokuwiki\plugin\slacknotifier\helper\Formatter;
 
 class action_plugin_slacknotifier extends ActionPlugin
 {
+    /** @var Event[] */
+    private $changes = [];
+    private $inRename = false;
+
     public function register(EventHandler $controller): void
     {
         $controller->register_hook('COMMON_WIKIPAGE_SAVE', 'AFTER', $this, 'handleSave');
+        $controller->register_hook('PLUGIN_MOVE_PAGE_RENAME', 'BEFORE', $this, 'handleRenameBefore', 'BEFORE');
+        $controller->register_hook('PLUGIN_MOVE_PAGE_RENAME', 'AFTER', $this, 'handleRenameAfter', 'AFTER');
     }
 
-    public function handleSave(Event $rawEvent): void
+    public function handleRenameBefore(): void
+    {
+        $this->inRename = true;
+    }
+
+    public function handleRenameAfter(): void
+    {
+        if (!$this->inRename) {
+            // Sanity check
+            throw new RuntimeException('Logic error: in rename is false after rename');
+        }
+        $this->inRename = false;
+
+        foreach ($this->changes as $event) {
+            $this->processEvent($event);
+        }
+    }
+
+    public function handleSave(Event $event): void
+    {
+        if ($this->inRename) {
+            $this->changes[] = $event;
+            return;
+        }
+
+        $this->processEvent($event);
+    }
+
+    private function processEvent(Event $rawEvent): void
     {
         $config = new Config($this);
         if (!$this->isValidNamespace($config->namespaces)) {
