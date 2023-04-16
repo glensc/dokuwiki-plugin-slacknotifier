@@ -3,7 +3,6 @@
 namespace dokuwiki\plugin\slacknotifier\event;
 
 use dokuwiki\Extension\Event;
-use InvalidArgumentException;
 use dokuwiki\plugin\slacknotifier\helper\Config;
 
 /**
@@ -13,7 +12,7 @@ use dokuwiki\plugin\slacknotifier\helper\Config;
  * @property int $newRevision
  * @link https://www.dokuwiki.org/devel:event:common_wikipage_save
  */
-class PageSaveEvent
+class PageSaveEvent extends BaseEvent
 {
     private const EVENT_TYPE = [
         DOKU_CHANGE_TYPE_EDIT => 'edit',
@@ -24,31 +23,19 @@ class PageSaveEvent
 
     /** @var string|null */
     public $eventType;
-    /** @var array */
-    private $data;
 
-    public static function fromEvent(Event $event, Config $config): ?self
+    public static function fromEvent(Event $rawEvent, Config $config): ?self
     {
-        $changeType = $event->data['changeType'];
+        $changeType = $rawEvent->data['changeType'];
         $eventType = self::EVENT_TYPE[$changeType] ?? null;
         if (!self::isValidEvent($eventType, $config)) {
             return null;
         }
 
-        $payload = new static();
-        $payload->eventType = $eventType;
-        $payload->data = $event->data;
+        $event = new static($rawEvent);
+        $event->eventType = $eventType;
 
-        return $payload;
-    }
-
-    public function __get(string $name)
-    {
-        if (!array_key_exists($name, $this->data)) {
-            throw new InvalidArgumentException("Invalid property: $name");
-        }
-
-        return $this->data[$name];
+        return $event;
     }
 
     private static function isValidEvent(?string $eventType, Config $config): bool
