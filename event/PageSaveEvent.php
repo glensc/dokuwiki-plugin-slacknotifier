@@ -2,6 +2,8 @@
 
 namespace dokuwiki\plugin\slacknotifier\event;
 
+use InvalidArgumentException;
+
 /**
  * @property string $changeType
  * @property string|null $summary
@@ -35,5 +37,20 @@ class PageSaveEvent extends BaseEvent
     public function isDelete(): bool
     {
         return $this->changeType === DOKU_CHANGE_TYPE_DELETE;
+    }
+
+    public function convertToRename(PageSaveEvent $deleteEvent)
+    {
+        // Sanity check
+        if (
+            !$this->isCreate() ||
+            !$deleteEvent->isDelete() ||
+            $this->summary !== $deleteEvent->summary
+        ) {
+            throw new InvalidArgumentException("Unexpected event");
+        }
+
+        $this->changeType = self::TYPE_RENAME;
+        $this->oldRevision = $deleteEvent->oldRevision;
     }
 }
