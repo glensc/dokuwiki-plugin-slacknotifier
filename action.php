@@ -10,6 +10,7 @@ use dokuwiki\Extension\Event;
 use dokuwiki\Extension\EventHandler;
 use dokuwiki\HTTP\DokuHTTPClient;
 use dokuwiki\Logger;
+use dokuwiki\plugin\slacknotifier\event\PageMoveEvent;
 use dokuwiki\plugin\slacknotifier\event\PageSaveEvent;
 use dokuwiki\plugin\slacknotifier\helper\Config;
 use dokuwiki\plugin\slacknotifier\helper\Context;
@@ -19,6 +20,10 @@ class action_plugin_slacknotifier extends ActionPlugin
 {
     /** @var Event[] */
     private $changes = [];
+    /** @var PageMoveEvent[] */
+    private $created = [];
+    /** @var PageMoveEvent[] */
+    private $deleted = [];
     private $inRename = false;
 
     public function register(EventHandler $controller): void
@@ -28,9 +33,12 @@ class action_plugin_slacknotifier extends ActionPlugin
         $controller->register_hook('PLUGIN_MOVE_PAGE_RENAME', 'AFTER', $this, 'handleRenameAfter', 'AFTER');
     }
 
-    public function handleRenameBefore(): void
+    public function handleRenameBefore(Event $rawEvent): void
     {
         $this->inRename = true;
+        $event = new PageMoveEvent($rawEvent);
+        $this->created[$event->dst_id] = $event;
+        $this->deleted[$event->src_id] = $event;
     }
 
     public function handleRenameAfter(): void
@@ -41,7 +49,7 @@ class action_plugin_slacknotifier extends ActionPlugin
         }
         $this->inRename = false;
 
-        foreach ($this->changes as $event) {
+        foreach ($this->getEvents() as $event) {
             $this->processEvent($event);
         }
     }
@@ -53,17 +61,46 @@ class action_plugin_slacknotifier extends ActionPlugin
             return;
         }
 
-        $this->processEvent($event);
+        $this->processEvent(new PageSaveEvent($event));
     }
 
-    private function processEvent(Event $rawEvent): void
+    /**
+     * @return PageSaveEvent[]
+     */
+    private function getEvents(): array
+    {
+        $events = [];
+        foreach ($this->changes as $rawEvent) {
+            $event = new PageSaveEvent($rawEvent);
+            $pageId = $event->id;
+
+            if ($event->isCreate() && isset($this->created[$pageId])) {
+                $moveEvent = $this->created[$pageId];
+                $moveEvent->setCreatedPageEvent($event);
+                unset($this->created[$pageId]);
+            } elseif ($event->isDelete() && isset($this->deleted[$pageId])) {
+                $moveEvent = $this->deleted[$pageId];
+                $createdEvent = $moveEvent->getCreatedPageEvent();
+                $createdEvent->convertToRename($event);
+                unset($this->deleted[$pageId]);
+                // Skip delete event itself
+                continue;
+            }
+
+            $events[] = $event;
+        }
+        $this->changes = [];
+
+        return $events;
+    }
+
+    private function processEvent(PageSaveEvent $event): void
     {
         $config = new Config($this);
         if (!$this->isValidNamespace($config->namespaces)) {
             return;
         }
 
-        $event = new PageSaveEvent($rawEvent);
         if (!$this->isValidEvent($event->getEventType(), $config)) {
             return;
         }
