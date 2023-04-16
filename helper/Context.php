@@ -25,8 +25,11 @@ class Context
 
     public function getUsername(): ?string
     {
-        global $INFO;
+        global $INFO, $USERINFO;
 
-        return $INFO['userinfo']['name'] ?? null;
+        // https://github.com/michitux/dokuwiki-plugin-move/issues/235
+        $userinfo = $INFO['userinfo'] ?? $USERINFO;
+
+        return $userinfo['name'] ?? null;
     }
 }
