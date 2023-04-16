@@ -10,6 +10,9 @@ on:
     paths:
       - "*.info.txt"
 
+env:
+  INFOTXT: plugin.info.txt
+
 jobs:
   release:
     name: Create release
@@ -20,7 +23,7 @@ jobs:
       - name: Configure release version
         id: version
         run: |
-          VERSION=$(awk '$1 == "date" {print $2}' plugin.info.txt)
+          VERSION=$(awk '$1 == "date" {print $2}' $INFOTXT)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Create release
