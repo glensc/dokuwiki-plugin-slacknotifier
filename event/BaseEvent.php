@@ -10,7 +10,8 @@ abstract class BaseEvent
     /** @var array */
     private $data;
 
-    public function __construct(Event $event) {
+    public function __construct(Event $event)
+    {
         $this->data = $event->data;
     }
 
