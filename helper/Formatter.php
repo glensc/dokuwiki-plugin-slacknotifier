@@ -14,7 +14,7 @@ class Formatter
         $this->config = $config;
     }
 
-    public function format(PageSaveEvent $payload, Context $context): array
+    public function format(PageSaveEvent $event, Context $context): array
     {
         $actionMap = [
             'create' => 'created',
@@ -22,26 +22,26 @@ class Formatter
             'edit minor' => 'updated (minor edit)',
             'delete' => 'removed',
         ];
-        $action = $actionMap[$payload->eventType] ?? null;
+        $action = $actionMap[$event->eventType] ?? null;
         $username = $context->username ?: 'Anonymous';
-        $page = $payload->id;
-        $link = $this->buildUrl($page, $payload->newRevision);
+        $page = $event->id;
+        $link = $this->buildUrl($page, $event->newRevision);
         $title = "{$username} {$action} page <{$link}|{$page}>";
-        if ($payload->eventType !== 'delete') {
-            $oldRev = $payload->oldRevision;
+        if ($event->eventType !== 'delete') {
+            $oldRev = $event->oldRevision;
             if ($oldRev) {
-                $diffURL = $this->buildUrl($page, $payload->newRevision, $payload->oldRevision);
+                $diffURL = $this->buildUrl($page, $event->newRevision, $event->oldRevision);
                 $title .= " (<{$diffURL}|Compare changes>)";
             }
         }
 
         $formatted = ['text' => $title];
-        if ($payload->summary && $this->config->show_summary) {
+        if ($event->summary && $this->config->show_summary) {
             $formatted['attachments'] = [
                 [
                     'fallback' => 'Change summary',
                     'title' => 'Summary',
-                    'text' => "{$payload->summary}\n- {$username}",
+                    'text' => "{$event->summary}\n- {$username}",
                 ],
             ];
         }

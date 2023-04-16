@@ -22,20 +22,20 @@ class action_plugin_slacknotifier extends ActionPlugin
         $controller->register_hook('COMMON_WIKIPAGE_SAVE', 'AFTER', $this, 'handleSave');
     }
 
-    public function handleSave(Event $event): void
+    public function handleSave(Event $rawEvent): void
     {
         $config = new Config($this);
         if (!$this->isValidNamespace($config->namespaces)) {
             return;
         }
 
-        $payload = PageSaveEvent::fromEvent($event, $config);
-        if (!$payload) {
+        $event = PageSaveEvent::fromEvent($rawEvent, $config);
+        if (!$event) {
             return;
         }
 
         $formatter = new Formatter($config);
-        $formatted = $formatter->format($payload, new Context());
+        $formatted = $formatter->format($event, new Context());
 
         $this->submitPayload($formatted);
     }
