@@ -63,6 +63,8 @@ class action_plugin_slacknotifier extends ActionPlugin
             return true;
         } elseif ($eventType === 'delete' && $config->notify_delete) {
             return true;
+        } elseif ($eventType === 'rename' && $config->notify_create && $config->notify_delete) {
+            return true;
         }
 
         return false;
