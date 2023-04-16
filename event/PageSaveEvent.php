@@ -2,9 +2,6 @@
 
 namespace dokuwiki\plugin\slacknotifier\event;
 
-use dokuwiki\Extension\Event;
-use dokuwiki\plugin\slacknotifier\helper\Config;
-
 /**
  * @property string $changeType
  * @property string|null $summary
