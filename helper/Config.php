@@ -8,6 +8,7 @@ use dokuwiki\Extension\PluginInterface;
  * A class to provide lazy access to plugin config
  *
  * @property string $namespaces
+ * @property string $webhook
  * @property bool $notify_create
  * @property bool $notify_edit
  * @property bool $notify_delete
