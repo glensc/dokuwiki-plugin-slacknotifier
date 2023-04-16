@@ -29,8 +29,8 @@ class action_plugin_slacknotifier extends ActionPlugin
             return;
         }
 
-        $event = PageSaveEvent::fromEvent($rawEvent, $config);
-        if (!$event) {
+        $event = new PageSaveEvent($rawEvent);
+        if (!$this->isValidEvent($event->getEventType(), $config)) {
             return;
         }
 
@@ -51,6 +51,21 @@ class action_plugin_slacknotifier extends ActionPlugin
         $thisNamespace = explode(':', $INFO['namespace']);
 
         return in_array($thisNamespace[0], $validNamespaces, true);
+    }
+
+    private function isValidEvent(?string $eventType, Config $config): bool
+    {
+        if ($eventType === 'create' && $config->notify_create) {
+            return true;
+        } elseif ($eventType === 'edit' && $config->notify_edit) {
+            return true;
+        } elseif ($eventType === 'edit minor' && $config->notify_edit && $config->notify_edit_minor) {
+            return true;
+        } elseif ($eventType === 'delete' && $config->notify_delete) {
+            return true;
+        }
+
+        return false;
     }
 
     private function submitPayload(string $url, array $payload): void
