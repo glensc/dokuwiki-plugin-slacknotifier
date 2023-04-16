@@ -21,6 +21,7 @@ class Formatter
             'edit' => 'updated',
             'edit minor' => 'updated (minor edit)',
             'delete' => 'removed',
+            'rename' => 'renamed',
         ];
         $eventType = $event->getEventType();
         $action = $actionMap[$eventType] ?? null;

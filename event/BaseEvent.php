@@ -23,4 +23,13 @@ abstract class BaseEvent
 
         return $this->data[$name];
     }
+
+    public function __set(string $name, $value)
+    {
+        if (!array_key_exists($name, $this->data)) {
+            throw new InvalidArgumentException("Invalid property: $name");
+        }
+
+        $this->data[$name] = $value;
+    }
 }
