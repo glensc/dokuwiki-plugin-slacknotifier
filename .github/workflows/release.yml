@@ -1,0 +1,37 @@
+# Create release on change to plugin.info.txt version line
+# https://github.com/dokuwiki/dokuwiki/issues/3951
+
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "*.info.txt"
+
+jobs:
+  phpcs:
+    name: Create release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Configure release version
+        id: version
+        run: |
+          VERSION=$(awk '$1 == "date" {print $2}' plugin.info.txt)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.VERSION }}
+          release_name: Release ${{ env.VERSION }}
+          draft: false
+          prerelease: false
+
+# vim:ts=2:sw=2:et
