@@ -22,12 +22,13 @@ class Formatter
             'edit minor' => 'updated (minor edit)',
             'delete' => 'removed',
         ];
-        $action = $actionMap[$event->eventType] ?? null;
+        $eventType = $event->getEventType();
+        $action = $actionMap[$eventType] ?? null;
         $username = $context->username ?: 'Anonymous';
         $page = $event->id;
         $link = $this->buildUrl($page, $event->newRevision);
         $title = "{$username} {$action} page <{$link}|{$page}>";
-        if ($event->eventType !== 'delete') {
+        if ($eventType !== 'delete') {
             $oldRev = $event->oldRevision;
             if ($oldRev) {
                 $diffURL = $this->buildUrl($page, $event->newRevision, $event->oldRevision);
