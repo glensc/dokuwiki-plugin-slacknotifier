@@ -37,7 +37,7 @@ class action_plugin_slacknotifier extends ActionPlugin
         $formatter = new Formatter($config);
         $formatted = $formatter->format($event, new Context());
 
-        $this->submitPayload($formatted);
+        $this->submitPayload($config->webhook, $formatted);
     }
 
     private function isValidNamespace(?string $validNamespaces): bool
@@ -53,14 +53,13 @@ class action_plugin_slacknotifier extends ActionPlugin
         return in_array($thisNamespace[0], $validNamespaces, true);
     }
 
-    private function submitPayload(array $payload): void
+    private function submitPayload(string $url, array $payload): void
     {
         $http = new DokuHTTPClient();
         $http->headers['Content-Type'] = 'application/json';
         // we do single ops here, no need for keep-alive
         $http->keep_alive = false;
 
-        $url = $this->getConf('webhook');
         $result = $http->post($url, ['payload' => json_encode($payload)]);
         if ($result !== 'ok') {
             $ctx = [
