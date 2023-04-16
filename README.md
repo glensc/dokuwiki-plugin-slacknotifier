@@ -4,6 +4,8 @@ A DokuWiki plugin that notifies a Slack channel room of wiki edits.
 
 ![Example notification](example.png)
 
+![Example rename notification](example_rename.png)
+
 ## Install
 
 Download the latest release from [Tags] page and install the plugin using the
