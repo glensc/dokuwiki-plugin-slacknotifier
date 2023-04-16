@@ -26,4 +26,14 @@ class PageSaveEvent extends BaseEvent
     {
         return self::EVENT_TYPE[$this->changeType] ?? null;
     }
+
+    public function isCreate(): bool
+    {
+        return $this->changeType === DOKU_CHANGE_TYPE_CREATE;
+    }
+
+    public function isDelete(): bool
+    {
+        return $this->changeType === DOKU_CHANGE_TYPE_DELETE;
+    }
 }
