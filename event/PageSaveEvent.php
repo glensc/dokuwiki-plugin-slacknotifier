@@ -22,9 +22,6 @@ class PageSaveEvent extends BaseEvent
         DOKU_CHANGE_TYPE_DELETE => 'delete',
     ];
 
-    /** @var string|null */
-    public $eventType;
-
     public function getEventType(): ?string
     {
         return self::EVENT_TYPE[$this->changeType] ?? null;
