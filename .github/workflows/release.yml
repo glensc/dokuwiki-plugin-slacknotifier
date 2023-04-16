@@ -45,4 +45,10 @@ jobs:
         with:
           php-version: ${{ env.PHP_VERSION }}
 
+      - name: Checkout dokuwiki versionfix tool
+        uses: actions/checkout@v3
+        with:
+          repository: splitbrain/dokuwiki-versionfix
+          path: versionfix
+
 # vim:ts=2:sw=2:et
