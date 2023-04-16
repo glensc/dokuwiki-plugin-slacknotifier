@@ -20,11 +20,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Configure release version
+      - name: Setup name and version
         id: version
         run: |
           VERSION=$(awk '$1 == "date" {print $2}' $INFOTXT)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
+          BASE=$(awk '$1 == "base" {print $2}' $INFOTXT)
+          echo "BASE=$BASE" >> $GITHUB_ENV
 
       - name: Create release
         id: create_release
