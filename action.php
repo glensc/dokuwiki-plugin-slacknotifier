@@ -10,10 +10,10 @@ use dokuwiki\Extension\Event;
 use dokuwiki\Extension\EventHandler;
 use dokuwiki\HTTP\DokuHTTPClient;
 use dokuwiki\Logger;
+use dokuwiki\plugin\slacknotifier\event\PageSaveEvent;
 use dokuwiki\plugin\slacknotifier\helper\Config;
 use dokuwiki\plugin\slacknotifier\helper\Context;
 use dokuwiki\plugin\slacknotifier\helper\Formatter;
-use dokuwiki\plugin\slacknotifier\helper\Payload;
 
 class action_plugin_slacknotifier extends ActionPlugin
 {
@@ -29,7 +29,7 @@ class action_plugin_slacknotifier extends ActionPlugin
             return;
         }
 
-        $payload = Payload::fromEvent($event, $config);
+        $payload = PageSaveEvent::fromEvent($event, $config);
         if (!$payload) {
             return;
         }

@@ -2,6 +2,8 @@
 
 namespace dokuwiki\plugin\slacknotifier\helper;
 
+use dokuwiki\plugin\slacknotifier\event\PageSaveEvent;
+
 class Formatter
 {
     /** @var Config */
@@ -12,7 +14,7 @@ class Formatter
         $this->config = $config;
     }
 
-    public function format(Payload $payload, Context $context): array
+    public function format(PageSaveEvent $payload, Context $context): array
     {
         $actionMap = [
             'create' => 'created',

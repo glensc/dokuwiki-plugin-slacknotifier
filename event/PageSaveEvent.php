@@ -1,9 +1,10 @@
 <?php
 
-namespace dokuwiki\plugin\slacknotifier\helper;
+namespace dokuwiki\plugin\slacknotifier\event;
 
 use dokuwiki\Extension\Event;
 use InvalidArgumentException;
+use dokuwiki\plugin\slacknotifier\helper\Config;
 
 /**
  * @property string|null $summary
@@ -12,7 +13,7 @@ use InvalidArgumentException;
  * @property int $newRevision
  * @link https://www.dokuwiki.org/devel:event:common_wikipage_save
  */
-class Payload
+class PageSaveEvent
 {
     private const EVENT_TYPE = [
         DOKU_CHANGE_TYPE_EDIT => 'edit',
