@@ -5,6 +5,7 @@
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  */
 
+use dokuwiki\Extension\ActionPlugin;
 use dokuwiki\Extension\Event;
 use dokuwiki\Extension\EventHandler;
 use dokuwiki\HTTP\DokuHTTPClient;
@@ -14,7 +15,7 @@ use dokuwiki\plugin\slacknotifier\helper\Context;
 use dokuwiki\plugin\slacknotifier\helper\Formatter;
 use dokuwiki\plugin\slacknotifier\helper\Payload;
 
-class action_plugin_slacknotifier extends DokuWiki_Action_Plugin
+class action_plugin_slacknotifier extends ActionPlugin
 {
     public function register(EventHandler $controller): void
     {
