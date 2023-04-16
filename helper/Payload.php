@@ -35,7 +35,6 @@ class Payload
         }
 
         $payload = new static();
-        $payload->summary = $event->data['summary'] ?: null;
         $payload->eventType = $eventType;
         $payload->data = $event->data;
 
