@@ -23,10 +23,6 @@ class action_plugin_slacknotifier extends DokuWiki_Action_Plugin
 
     public function handleSave(Event $event): void
     {
-        if ($this->isAtticWrite($event->data['file'])) {
-            return;
-        }
-
         $config = new Config($this);
         if (!$this->isValidNamespace($config->namespaces)) {
             return;
@@ -41,11 +37,6 @@ class action_plugin_slacknotifier extends DokuWiki_Action_Plugin
         $formatted = $formatter->format($payload, new Context());
 
         $this->submitPayload($formatted);
-    }
-
-    private function isAtticWrite($filename): bool
-    {
-        return strpos($filename, 'data/attic') !== false;
     }
 
     private function isValidNamespace(?string $validNamespaces): bool
