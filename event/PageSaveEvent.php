@@ -6,6 +6,7 @@ use dokuwiki\Extension\Event;
 use dokuwiki\plugin\slacknotifier\helper\Config;
 
 /**
+ * @property string $changeType
  * @property string|null $summary
  * @property string $id
  * @property int|false $oldRevision
@@ -36,6 +37,11 @@ class PageSaveEvent extends BaseEvent
         $event->eventType = $eventType;
 
         return $event;
+    }
+
+    public function getEventType(): ?string
+    {
+        return self::EVENT_TYPE[$this->changeType] ?? null;
     }
 
     private static function isValidEvent(?string $eventType, Config $config): bool
