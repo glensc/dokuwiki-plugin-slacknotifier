@@ -64,4 +64,10 @@ jobs:
           github_key     ""
           EOF
 
+      - name: Run versionfix tool
+        working-directory: ./versionfix
+        env:
+          HOME: ${{ github.workspace }}
+        run: php versionfix.php ${{ env.BASE }}
+
 # vim:ts=2:sw=2:et
