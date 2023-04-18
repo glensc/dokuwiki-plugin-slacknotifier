@@ -34,6 +34,10 @@ class action_plugin_slacknotifier extends ActionPlugin
 
     public function register(EventHandler $controller): void
     {
+        if (!$this->config->webhook) {
+            return;
+        }
+
         $controller->register_hook('COMMON_WIKIPAGE_SAVE', 'AFTER', $this, 'handleSave');
         $controller->register_hook('PLUGIN_MOVE_PAGE_RENAME', 'BEFORE', $this, 'handleRenameBefore', 'BEFORE');
         $controller->register_hook('PLUGIN_MOVE_PAGE_RENAME', 'AFTER', $this, 'handleRenameAfter', 'AFTER');
