@@ -106,19 +106,18 @@ class action_plugin_slacknotifier extends ActionPlugin
 
     private function processEvent(PageSaveEvent $event): void
     {
-        $config = new Config($this);
-        if (!$this->isValidNamespace($config->namespaces)) {
+        if (!$this->isValidNamespace($this->config->namespaces)) {
             return;
         }
 
-        if (!$this->isValidEvent($event->getEventType(), $config)) {
+        if (!$this->isValidEvent($event->getEventType())) {
             return;
         }
 
-        $formatter = new Formatter($config);
+        $formatter = new Formatter($this->config);
         $formatted = $formatter->format($event, new Context());
 
-        $this->submitPayload($config->webhook, $formatted);
+        $this->submitPayload($this->config->webhook, $formatted);
     }
 
     private function isValidNamespace(?string $validNamespaces): bool
@@ -134,17 +133,17 @@ class action_plugin_slacknotifier extends ActionPlugin
         return in_array($thisNamespace[0], $validNamespaces, true);
     }
 
-    private function isValidEvent(?string $eventType, Config $config): bool
+    private function isValidEvent(?string $eventType): bool
     {
-        if ($eventType === 'create' && $config->notify_create) {
+        if ($eventType === 'create' && $this->config->notify_create) {
             return true;
-        } elseif ($eventType === 'edit' && $config->notify_edit) {
+        } elseif ($eventType === 'edit' && $this->config->notify_edit) {
             return true;
-        } elseif ($eventType === 'edit minor' && $config->notify_edit && $config->notify_edit_minor) {
+        } elseif ($eventType === 'edit minor' && $this->config->notify_edit && $this->config->notify_edit_minor) {
             return true;
-        } elseif ($eventType === 'delete' && $config->notify_delete) {
+        } elseif ($eventType === 'delete' && $this->config->notify_delete) {
             return true;
-        } elseif ($eventType === 'rename' && $config->notify_create && $config->notify_delete) {
+        } elseif ($eventType === 'rename' && $this->config->notify_create && $this->config->notify_delete) {
             return true;
         }
 
