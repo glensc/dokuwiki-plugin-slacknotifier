@@ -25,6 +25,12 @@ class action_plugin_slacknotifier extends ActionPlugin
     /** @var PageMoveEvent[] */
     private $deleted = [];
     private $inRename = false;
+    /** @var Config */
+    private $config;
+
+    public function __construct() {
+        $this->config = new Config($this);
+    }
 
     public function register(EventHandler $controller): void
     {
