@@ -106,7 +106,7 @@ class action_plugin_slacknotifier extends ActionPlugin
 
     private function processEvent(PageSaveEvent $event): void
     {
-        if (!$this->isValidNamespace($this->config->namespaces)) {
+        if (!$this->config->isValidNamespace($event->getNamespace())) {
             return;
         }
 
@@ -116,7 +116,6 @@ class action_plugin_slacknotifier extends ActionPlugin
 
         $formatter = new Formatter($this->config);
         $formatted = $formatter->format($event, new Context());
-
         $this->submitPayload($this->config->webhook, $formatted);
     }
 
