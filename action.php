@@ -119,19 +119,6 @@ class action_plugin_slacknotifier extends ActionPlugin
         $this->submitPayload($this->config->webhook, $formatted);
     }
 
-    private function isValidNamespace(?string $validNamespaces): bool
-    {
-        if (!$validNamespaces) {
-            return true;
-        }
-
-        global $INFO;
-        $validNamespaces = explode(',', $validNamespaces);
-        $thisNamespace = explode(':', $INFO['namespace']);
-
-        return in_array($thisNamespace[0], $validNamespaces, true);
-    }
-
     private function isValidEvent(?string $eventType): bool
     {
         if ($eventType === 'create' && $this->config->notify_create) {
