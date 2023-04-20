@@ -29,6 +29,14 @@ class PageSaveEvent extends BaseEvent
         return self::EVENT_TYPE[$this->changeType] ?? null;
     }
 
+    /**
+     * Root namespace of the page.
+     */
+    public function getNamespace(): string
+    {
+        return explode(':', $this->id, 2)[0];
+    }
+
     public function isCreate(): bool
     {
         return $this->changeType === DOKU_CHANGE_TYPE_CREATE;
