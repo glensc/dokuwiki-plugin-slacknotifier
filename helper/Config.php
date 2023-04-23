@@ -29,4 +29,18 @@ class Config
     {
         return $this->plugin->getConf($name, null);
     }
+
+    /**
+     * Return true if $namespace is configured as valid namespace.
+     */
+    public function isValidNamespace(string $namespace): bool
+    {
+        if (!$this->namespaces) {
+            return true;
+        }
+
+        $namespaces = explode(',', $this->namespaces);
+
+        return in_array($namespace, $namespaces, true);
+    }
 }
