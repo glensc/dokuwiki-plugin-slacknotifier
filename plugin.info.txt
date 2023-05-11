@@ -3,5 +3,5 @@ author glen
 email  glen@delfi.ee
 date   2023-05-11
 name   Slack Notifier
-desc   Notify page events via Slack
+desc   A DokuWiki plugin that notifies a Slack channel of page edits
 url    https://www.dokuwiki.org/plugin:slacknotifier
