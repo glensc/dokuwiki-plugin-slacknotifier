@@ -53,6 +53,8 @@ class Formatter
 
     private function buildUrl(string $page, int $rev, ?int $oldRev = null): ?string
     {
+        global $conf;
+
         $urlParameters = $oldRev ? "do=diff&rev2[0]=$oldRev&rev2[1]=$rev" : "";
 
         return wl($page, $urlParameters, true, '&');
