@@ -51,7 +51,7 @@ class Formatter
         return $formatted;
     }
 /*
-    wl() - https://xref.dokuwiki.org/reference/dokuwiki/nav.html?_functions/index.html
+    wl() - https://xref.dokuwiki.org/reference/dokuwiki/nav.html?inc/common.php.source.html#l493
 */
 
     private function buildUrl(string $page, int $rev, ?int $oldRev = null): ?string
