@@ -23,7 +23,7 @@ Download the latest release from [Tags] page and install the plugin using the
 
 ## Root Namespace
 
-To incldue the root namespace, simply put a : in the namespace field in the config.
+To include the root namespace, simply put a : in the namespace field in the config.
 
 ## Discord
 
