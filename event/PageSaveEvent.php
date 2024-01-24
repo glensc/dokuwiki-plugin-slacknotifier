@@ -38,7 +38,7 @@ class PageSaveEvent extends BaseEvent
         $pos = strpos($this->id, ':');
         if($pos === false)
         {
-            return ('');
+            return '';
         }
 
         return explode(':', $this->id, 2)[0];
