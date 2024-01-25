@@ -23,8 +23,4 @@ Download the latest release from [Tags] page and install the plugin using the
 
 ## Root Namespace
 
-To include the root namespace, simply put a : in the namespace field in the config.
-
-## Discord
-
-This plugin will work for discord as well, if you append /slack to the discord webhook url; see https://birdie0.github.io/discord-webhooks-guide/other/slack_formatting.html 
+To include the root namespace, simply put a `:` in the namespace field in the config.
