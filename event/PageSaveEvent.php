@@ -31,14 +31,13 @@ class PageSaveEvent extends BaseEvent
 
     /**
      * Root namespace of the page.
-     * Handle case of page being in root namespace
      */
     public function getNamespace(): string
     {
+        // Handle special case of page being in root namespace
         $pos = strpos($this->id, ':');
-        if($pos === false)
-        {
-            return '';
+        if ($pos === false) {
+            return ':';
         }
 
         return explode(':', $this->id, 2)[0];
