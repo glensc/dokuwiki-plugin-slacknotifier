@@ -1,7 +1,7 @@
 base   slacknotifier
 author glen
 email  glen@delfi.ee
-date   2023-05-11
+date   2024-03-01
 name   Slack Notifier
 desc   A DokuWiki plugin that notifies a Slack channel of page edits
 url    https://www.dokuwiki.org/plugin:slacknotifier
