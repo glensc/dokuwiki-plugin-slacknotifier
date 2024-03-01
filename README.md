@@ -20,3 +20,7 @@ Download the latest release from [Tags] page and install the plugin using the
 1. Create an Incoming Webhook on slack: https://api.slack.com/messaging/webhooks#create_a_webhook
 
 2. Enter the webhook into the slacknotifier configuration section in DokuWiki's Configuration Settings
+
+## Root Namespace
+
+To include the root namespace, simply put a `:` in the namespace field in the config.
